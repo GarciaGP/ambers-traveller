@@ -1,0 +1,24 @@
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence">
+	<persistence-unit name="mssql-unit"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<properties>
+			<property name="hibernate.show_sql" value="true" />
+			<!-- update -> cria/atualiza as tabelas create -> apaga e cria todas as 
+				tabelas validate -> valida se as tabelas estão de acordo com a classe -->
+
+			<property name="javax.persistence.jdbc.driver"
+				value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property>
+			<property name="javax.persistence.jdbc.url"
+				value=""></property>
+			<property name="javax.persistence.jdbc.user" value="ambers"></property>
+			<property name="javax.persistence.jdbc.password"
+				value="m@sterk3y"></property>
+
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.SQLServerDialect" />
+		</properties>
+	</persistence-unit>
+</persistence>
