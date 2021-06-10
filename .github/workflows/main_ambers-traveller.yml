@@ -49,5 +49,5 @@ jobs:
       with:
         app-name: 'ambers-traveller'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_b62ab1ae9989432daf4fe21ea1c47150 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_513ae6edeb4f4a2681dcc2dadd654e44 }}
         package: '*.war'
