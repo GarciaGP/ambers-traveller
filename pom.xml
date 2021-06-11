@@ -76,14 +76,6 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>oracle</groupId>
-			<artifactId>jdbc-driver</artifactId>
-			<version>12</version>
-			<scope>system</scope>
-			<systemPath>D:/SystemPaths/ojdbc8.jar</systemPath>
-		</dependency>
-
 	</dependencies>
 
 	<properties>
