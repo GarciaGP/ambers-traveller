@@ -3,8 +3,6 @@ package br.com.ambers.fiap.viewmodel;
 import java.util.ArrayList;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.fiap.tds.entity.Avaliacao;
