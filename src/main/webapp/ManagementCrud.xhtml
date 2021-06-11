@@ -61,14 +61,15 @@
 
 					<p:column selectionMode="multiple" exportable="false"></p:column>
 
-					<!-- <p:column headerText="Code" sortBy="#{product.code}"
-						filterBy="#{product.code}">
-						<h:outputText value="#{product.code}" />
+					<p:column headerText="Código" sortBy="#{hotel.codigo}"
+						filterBy="#{hotel.codigo}">
+						<h:outputText value="#{hotel.codigo}" />
 					</p:column>
-					<p:column headerText="Name" sortBy="#{product.name}"
-						filterBy="#{product.name}">
-						<h:outputText value="#{product.name}" />
+					<p:column headerText="Nome" sortBy="#{hotel.nome}"
+						filterBy="#{hotel.nome}">
+						<h:outputText value="#{hotel.nome}" />
 					</p:column>
+					<!--
 					<p:column headerText="Image" exportable="false">
 						<p:graphicImage name="images/product/#{product.image}"
 							library="demo" styleClass="product-image" />
@@ -127,21 +128,44 @@
 								<p:inputTextarea id="description"
 									value="#{crudView.hospedagemSelecionada.descricao}" />
 							</div>
-							<div class="p-field">
-
-							</div>
+							<div class="p-field"></div>
 							<div class="p-formgrid p-grid">
 								<div class="p-field p-col">
-									<p:outputLabel for="price">Valor</p:outputLabel>
+									<p:outputLabel for="price">Preço</p:outputLabel>
 									<p:inputNumber id="price"
 										value="#{crudView.hospedagemSelecionada.preco}" symbol=" BRL"
 										symbolPosition="s" decimalSeparator="." thousandSeparator="," />
 								</div>
+
 								<div class="p-field p-col">
-									<p:outputLabel for="quantity">Site</p:outputLabel>
-									<p:inputText id="quantity" min="0"
-										value="#{crudView.hospedagemSelecionada.site}" />
+									<p:outputLabel for="secTel">Telefone Secundário</p:outputLabel>
+									<p:inputText id="secTel" min="0"
+										value="#{crudView.hospedagemSelecionada.telefone.telefoneSecundario}" />
 								</div>
+								<hr />
+								<div class="p-field p-col">
+									<p:outputLabel for="@next" value="UF" />
+									<p:selectOneMenu id="option" value="#{crudView.ufSelecionado}">
+										<f:selectItem itemLabel="Selecione . . ." itemValue="" />
+										<f:selectItems value="#{crudView.ufs}" />
+									</p:selectOneMenu>
+								</div>
+								<div class="p-field p-col">
+									<p:outputLabel for="estado">Estado</p:outputLabel>
+									<p:inputText id="estado" min="0"
+										value="#{crudView.hospedagemSelecionada.endereco.estado}" />
+								</div>
+								<div class="p-field p-col">
+									<p:outputLabel for="distance">Distância</p:outputLabel>
+									<p:inputText id="distance" min="0"
+										value="#{crudView.hospedagemSelecionada.endereco.distancia}" />
+								</div>
+								<div class="p-field p-col">
+									<h5>Escolha uma foto!</h5>
+									<p:fileUpload value="#{fileUploadView.files}" mode="simple"
+										skinSimple="true" multiple="true" />
+								</div>
+
 							</div>
 						</p:outputPanel>
 					</p:outputPanel>

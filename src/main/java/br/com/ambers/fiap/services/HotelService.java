@@ -7,7 +7,6 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 import br.com.ambers.fiap.viewmodel.HotelVM;
-import br.com.fiap.tds.dao.HotelDao;
 import br.com.fiap.tds.dao.impl.HotelDaoImpl;
 import br.com.fiap.tds.entity.Hotel;
 import br.com.fiap.tds.singleton.EntityManagerFactorySingleton;
@@ -15,26 +14,22 @@ import br.com.fiap.tds.singleton.EntityManagerFactorySingleton;
 @Named
 @ApplicationScoped
 public class HotelService {
+	
+	private EntityManager em;
+	private HotelDaoImpl dao;
+	
+	public HotelService() {
+		this.em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+		this.dao = new HotelDaoImpl(em);
+	}
 
-	public void adicionar(HotelVM hotelViewModel) {
-		// Obter um Entity Manager
-		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
-
-		Hotel hotel = hotelViewModel.converterParaModel(hotelViewModel);
-
-		HotelDaoImpl dao = new HotelDaoImpl(em);
-
+	public void adicionar(HotelVM viewModel) {
+		Hotel hotel = viewModel.converterParaModel(viewModel);
 		dao.create(hotel);
-
 	}
 	
 	public List<Hotel> listar() {
-		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
-		
-		HotelDaoImpl dao = new HotelDaoImpl(em);
-		
-		// dao.read(null);
-		
+		// dao.read(null);		
 		return null;
 		
 	}
