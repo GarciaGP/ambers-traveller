@@ -22,4 +22,10 @@ public class LoginService {
 		return dao.read(1);
 	}
 
+	public boolean validar(LoginVM login) {
+		Login loginEntity = dao.buscarPorEmailESenha(login.getEmail(), login.getSenha());
+		return loginEntity != null;
+	}
+
+
 }
