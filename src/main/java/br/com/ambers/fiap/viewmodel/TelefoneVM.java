@@ -11,80 +11,54 @@ public class TelefoneVM {
 	private String celular;
 	private String telefoneSecundario;
 	private List<HotelVM> hoteis;
-	
-	
-	
+
 	public Integer getCodigo() {
 		return codigo;
 	}
-
-
 
 	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
 
-
-
 	public String getTelefone() {
 		return telefone;
 	}
-
-
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 
-
-
 	public String getDdd() {
 		return ddd;
 	}
-
-
 
 	public void setDdd(String ddd) {
 		this.ddd = ddd;
 	}
 
-
-
 	public String getCelular() {
 		return celular;
 	}
-
-
 
 	public void setCelular(String celular) {
 		this.celular = celular;
 	}
 
-
-
 	public String getTelefoneSecundario() {
 		return telefoneSecundario;
 	}
-
-
 
 	public void setTelefoneSecundario(String telefoneSecundario) {
 		this.telefoneSecundario = telefoneSecundario;
 	}
 
-
-
 	public List<HotelVM> getHoteis() {
 		return hoteis;
 	}
 
-
-
 	public void setHoteis(List<HotelVM> hoteis) {
 		this.hoteis = hoteis;
 	}
-
-
 
 	public Telefone converterParaModel(TelefoneVM viewModel) {
 		Telefone model = new Telefone();
@@ -94,5 +68,15 @@ public class TelefoneVM {
 		model.setCelular(viewModel.celular);
 		model.setTelefoneSecundario(viewModel.telefoneSecundario);
 		return model;
+	}
+
+	public TelefoneVM converterParaView(Telefone telefone) {
+		TelefoneVM view = new TelefoneVM();
+		view.setCodigo(telefone.getCodigo());
+		view.setTelefone(telefone.getTelefone());
+		view.setDdd(telefone.getDdd());
+		view.setCelular(telefone.getCelular());
+		view.setTelefoneSecundario(telefone.getTelefoneSecundario());
+		return view;
 	}
 }

@@ -1,6 +1,7 @@
 package br.com.ambers.fiap.viewmodel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -16,12 +17,12 @@ import br.com.fiap.tds.enumeration.Tipo;
 @Named
 @ApplicationScoped
 public class HotelVM {
-	
+
 	public HotelVM() {
 		this.telefone = new TelefoneVM();
 		this.endereco = new EnderecoVM();
 	}
-	
+
 	private int codigo;
 	private String nome;
 	private String descricao;
@@ -32,7 +33,7 @@ public class HotelVM {
 	private TelefoneVM telefone;
 	private EnderecoVM endereco;
 	private float mediaAvaliacoes;
-	
+
 	public int getCodigo() {
 		return codigo;
 	}
@@ -72,7 +73,7 @@ public class HotelVM {
 	public void setSite(String site) {
 		this.site = site;
 	}
-	
+
 	public Tipo getTipo() {
 		return tipo;
 	}
@@ -116,7 +117,7 @@ public class HotelVM {
 	public Hotel converterParaModel(HotelVM viewModel) {
 		Telefone telefone = viewModel.telefone.converterParaModel(viewModel.telefone);
 		Endereco endereco = viewModel.endereco.converterParaModel(viewModel.endereco);
-		
+
 		Hotel hotel = new Hotel();
 		hotel.setNome(viewModel.nome);
 		hotel.setDescricao(viewModel.descricao);
@@ -129,8 +130,45 @@ public class HotelVM {
 		hotel.setAvaliacoes(new ArrayList<Avaliacao>());
 		telefone.addHotel(hotel);
 		endereco.addHotel(hotel);
-		
+
+		// Provisorio
+		endereco.setBase64Imagem("placeholder");
+		hotel.setBase64Imagem("placeholder");
+
 		return hotel;
+	}
+
+	public HotelVM converterParaView(Hotel hotel) {
+		TelefoneVM telefone = new TelefoneVM();
+		EnderecoVM endereco = new EnderecoVM();
+
+		telefone = telefone.converterParaView(hotel.getTelefone());
+		endereco = endereco.converterParaView(hotel.getEndereco());
+
+		HotelVM view = new HotelVM();
+		view.setNome(hotel.getNome());
+		view.setDescricao(hotel.getDescricao());
+		view.setTipo(hotel.getTipo());
+		view.setSite(hotel.getSite());
+		view.setPreco(hotel.getPreco());
+		view.setBase64Imagem(hotel.getBase64Imagem());
+		view.setTelefone(telefone);
+		view.setEndereco(endereco);
+		view.setMediaAvaliacoes(calcularMedia(hotel.getAvaliacoes()));
+		view.setTelefone(telefone);
+		view.setEndereco(endereco);
+
+		// Provisorio
+		view.setBase64Imagem("placeholder");
+		view.getEndereco().setBase64Imagem("placeholder");
+
+		return view;
+	}
+
+	public float calcularMedia(List<Avaliacao> avaliacoes) {
+		// TODO Calcular média de avaliações
+		return 0;
+
 	}
 
 }

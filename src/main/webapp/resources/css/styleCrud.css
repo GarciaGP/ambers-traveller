@@ -1,0 +1,12 @@
+.form-modal {
+	min-width: 750px;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex > .p-field.p-col {
+	margin: 0 5px;
+	width: 100%;
+}

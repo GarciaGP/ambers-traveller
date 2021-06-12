@@ -15,7 +15,9 @@ import org.primefaces.PrimeFaces;
 
 import br.com.ambers.fiap.services.HotelService;
 import br.com.ambers.fiap.viewmodel.HotelVM;
+import br.com.fiap.tds.enumeration.Tipo;
 import br.com.fiap.tds.enumeration.Uf;
+import br.com.fiap.tds.exception.CommitException;
 
 @Named
 @ViewScoped
@@ -25,9 +27,13 @@ public class CrudView implements Serializable {
 
 	private Uf[] ufs = Uf.values();
 
+	private Tipo tipos[] = Tipo.values();
+
+	private String tipoSelecionado;
+
 	private String ufSelecionado;
 
-	private List<HotelVM> hoteis;
+	private List<HotelVM> hospedagens;
 
 	private HotelVM hospedagemSelecionada;
 
@@ -39,7 +45,7 @@ public class CrudView implements Serializable {
 	@PostConstruct
 	public void init() {
 		this.hospedagensSelecionadas = new ArrayList<HotelVM>();
-		this.hoteis = new ArrayList<HotelVM>();
+		this.hospedagens = service.findAll();
 		System.out.println("Componente iniciado");
 		// TODO Implementar busca de todos as hospedagens cadastradas
 	}
@@ -50,6 +56,22 @@ public class CrudView implements Serializable {
 
 	public void setUfSelecionado(String ufSelecionado) {
 		this.ufSelecionado = ufSelecionado;
+	}
+
+	public String getTipoSelecionado() {
+		return tipoSelecionado;
+	}
+
+	public void setTipoSelecionado(String tipoSelecionado) {
+		this.tipoSelecionado = tipoSelecionado;
+	}
+
+	public Tipo[] getTipos() {
+		return tipos;
+	}
+
+	public void setTipos(Tipo[] tipos) {
+		this.tipos = tipos;
 	}
 
 	public Uf[] getUfs() {
@@ -76,12 +98,12 @@ public class CrudView implements Serializable {
 		this.hospedagensSelecionadas = hospedagensSelecionadas;
 	}
 
-	public void setHoteis(List<HotelVM> hoteis) {
-		this.hoteis = hoteis;
+	public void setHospedagens(List<HotelVM> hoteis) {
+		this.hospedagens = hoteis;
 	}
 
-	public List<HotelVM> getHoteis() {
-		return hoteis;
+	public List<HotelVM> getHospedagens() {
+		return hospedagens;
 	}
 
 	public void openNew() {
@@ -89,14 +111,23 @@ public class CrudView implements Serializable {
 	}
 
 	public void saveProduct() {
+		this.hospedagemSelecionada.getEndereco().setUf(Uf.valueOf(ufSelecionado));
+		this.hospedagemSelecionada.setTipo(Tipo.valueOf(tipoSelecionado));
+		this.hospedagemSelecionada.setTipo(Tipo.LAZER);
+
 		if (this.hospedagemSelecionada.getCodigo() == 0) {
-			this.hoteis.add(this.hospedagemSelecionada);
-			service.adicionar(hospedagemSelecionada);
+			this.hospedagens.add(this.hospedagemSelecionada);
+			try {
+				service.adicionar(hospedagemSelecionada);
+			} catch (CommitException e) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO!", e.getMessage()));
+				e.printStackTrace();
+			}
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Hotel adicionado!"));
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Updated"));
 		}
-
 		PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
 		PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
 	}
@@ -128,7 +159,7 @@ public class CrudView implements Serializable {
 	public void deleteSelectedProducts() {
 		// this.hoteis.removeAll(this.hospedagemSelecionada);
 		this.hospedagensSelecionadas = null;
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Products Removed"));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Hospedagem removida!"));
 		PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
 		PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");
 	}

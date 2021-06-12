@@ -6,6 +6,8 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
+
+
 <ui:composition template="_template.xhtml">
 	<ui:define name="content">
 
@@ -35,7 +37,7 @@
 				</p:toolbar>
 
 				<p:dataTable id="dt-products" widgetVar="dtProducts" var="hotel"
-					value="#{crudView.hoteis}" reflow="true"
+					value="#{crudView.hospedagens}" reflow="true"
 					styleClass="products-table"
 					selection="#{crudView.hospedagensSelecionadas}"
 					rowKey="#{hotel.codigo}" paginator="true" rows="10"
@@ -73,25 +75,26 @@
 					<p:column headerText="Image" exportable="false">
 						<p:graphicImage name="images/product/#{product.image}"
 							library="demo" styleClass="product-image" />
-					</p:column>
-					<p:column headerText="Price" sortBy="#{product.price}">
-						<h:outputText value="#{product.price}" style="font-weight: 700">
-							<f:convertNumber currencySymbol="$" type="currency" />
+					</p:column> -->
+					<p:column headerText="Price" sortBy="#{hotel.preco}">
+						<h:outputText value="#{hotel.preco}" style="font-weight: 700">
+							<f:convertNumber currencySymbol="R$" type="currency" />
 						</h:outputText>
 					</p:column>
+					<!-- 
 					<p:column headerText="Category" sortBy="#{product.category}"
 						filterBy="#{product.category}">
 						<h:outputText value="#{product.category}" />
-					</p:column>
-					<p:column headerText="Reviews" sortBy="#{product.rating}">
-						<p:rating value="#{product.rating}" readonly="true" />
-					</p:column>
-					<p:column headerText="Status" sortBy="#{product.inventoryStatus}"
-						filterBy="#{product.inventoryStatus}">
-						<h:outputText
-							styleClass="product-badge status-#{product.inventoryStatus.name().toLowerCase()}"
-							value="#{product.inventoryStatus.text}" />
 					</p:column> -->
+					<!-- 					<p:column headerText="Reviews" sortBy="#{hotel.mediaAvaliacoes}">
+						<p:rating value="#{hotel.mediaAvaliacoes}" readonly="true" />
+					</p:column> -->
+
+					<p:column headerText="Tipo" sortBy="#{hotel.tipo}"
+						filterBy="#{hotel.tipo}">
+						<h:outputText styleClass="product-badge status-#{hotel.tipo}"
+							value="#{hotel.tipo}" />
+					</p:column>
 					<p:column exportable="false">
 						<p:commandButton icon="pi pi-pencil"
 							update=":form:manage-product-content"
@@ -113,9 +116,12 @@
 				</p:dataTable>
 
 				<p:dialog header="Detalhes da hospedagem" showEffect="fade"
-					modal="true" widgetVar="manageProductDialog" responsive="true">
-					<p:outputPanel id="manage-product-content" class="ui-fluid">
-						<p:outputPanel
+					modal="true" widgetVar="manageProductDialog" responsive="true"
+					styleClass="form-modal">
+					<p:outputPanel id="manage-product-content"
+						styleClass="ui-fluid form-modal">
+						<p:outputPanel styleClass="
+						form-modal"
 							rendered="#{not empty crudView.hospedagemSelecionada}">
 
 							<div class="p-field">
@@ -128,21 +134,54 @@
 								<p:inputTextarea id="description"
 									value="#{crudView.hospedagemSelecionada.descricao}" />
 							</div>
-							<div class="p-field"></div>
-							<div class="p-formgrid p-grid">
+							<div class="ui-fluid p-formgrid p-grid flex">
 								<div class="p-field p-col">
 									<p:outputLabel for="price">Preço</p:outputLabel>
 									<p:inputNumber id="price"
 										value="#{crudView.hospedagemSelecionada.preco}" symbol=" BRL"
 										symbolPosition="s" decimalSeparator="." thousandSeparator="," />
 								</div>
-
+								<div class="p-field p-col">
+									<p:outputLabel for="@next" value="Tipo" />
+									<p:selectOneMenu id="typeOption"
+										value="#{crudView.tipoSelecionado}">
+										<f:selectItem itemLabel="Selecione . . ." itemValue="" />
+										<f:selectItems value="#{crudView.tipos}" />
+									</p:selectOneMenu>
+								</div>
+							</div>
+							<div class="p-field p-col">
+								<p:outputLabel for="site">Site</p:outputLabel>
+								<p:inputText id="site" min="0"
+									value="#{crudView.hospedagemSelecionada.site}" />
+							</div>
+							<hr />
+							<div class="ui-fluid p-formgrid p-grid flex">
+								<div class="p-field p-col">
+									<p:outputLabel for="ddd">DDD</p:outputLabel>
+									<p:inputText id="ddd" min="0"
+										value="#{crudView.hospedagemSelecionada.telefone.ddd}" />
+								</div>
+								<div class="p-field p-col">
+									<p:outputLabel for="tel">Telefone</p:outputLabel>
+									<p:inputText id="tel" min="0"
+										value="#{crudView.hospedagemSelecionada.telefone.telefone}" />
+								</div>
+							</div>
+							<div class="ui-fluid p-formgrid p-grid flex">
+								<div class="p-field p-col">
+									<p:outputLabel for="cel">celular</p:outputLabel>
+									<p:inputText id="cel" min="0"
+										value="#{crudView.hospedagemSelecionada.telefone.celular}" />
+								</div>
 								<div class="p-field p-col">
 									<p:outputLabel for="secTel">Telefone Secundário</p:outputLabel>
 									<p:inputText id="secTel" min="0"
 										value="#{crudView.hospedagemSelecionada.telefone.telefoneSecundario}" />
 								</div>
-								<hr />
+							</div>
+							<hr />
+							<div class="ui-fluid p-formgrid p-grid flex">
 								<div class="p-field p-col">
 									<p:outputLabel for="@next" value="UF" />
 									<p:selectOneMenu id="option" value="#{crudView.ufSelecionado}">
@@ -155,17 +194,16 @@
 									<p:inputText id="estado" min="0"
 										value="#{crudView.hospedagemSelecionada.endereco.estado}" />
 								</div>
-								<div class="p-field p-col">
-									<p:outputLabel for="distance">Distância</p:outputLabel>
-									<p:inputText id="distance" min="0"
-										value="#{crudView.hospedagemSelecionada.endereco.distancia}" />
-								</div>
-								<div class="p-field p-col">
-									<h5>Escolha uma foto!</h5>
-									<p:fileUpload value="#{fileUploadView.files}" mode="simple"
-										skinSimple="true" multiple="true" />
-								</div>
-
+							</div>
+							<div class="p-field p-col">
+								<p:outputLabel for="distance">Distância</p:outputLabel>
+								<p:inputText id="distance" min="0"
+									value="#{crudView.hospedagemSelecionada.endereco.distancia}" />
+							</div>
+							<div class="p-field p-col">
+								<h5>Escolha uma foto!</h5>
+								<p:fileUpload value="#{fileUploadView.files}" mode="simple"
+									skinSimple="true" multiple="true" />
 							</div>
 						</p:outputPanel>
 					</p:outputPanel>

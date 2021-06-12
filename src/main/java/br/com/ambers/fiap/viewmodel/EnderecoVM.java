@@ -3,7 +3,6 @@ package br.com.ambers.fiap.viewmodel;
 import java.util.List;
 
 import br.com.fiap.tds.entity.Endereco;
-import br.com.fiap.tds.entity.Hotel;
 import br.com.fiap.tds.enumeration.Uf;
 
 public class EnderecoVM {
@@ -59,6 +58,14 @@ public class EnderecoVM {
 		model.setUf(viewModel.uf);
 		model.setDistancia(viewModel.distancia);
 		return model;
+	}
+	public EnderecoVM converterParaView(Endereco endereco) {
+		EnderecoVM view = new EnderecoVM();
+		view.setCodigo(endereco.getCodigo());
+		view.setEstado(endereco.getEstado());
+		view.setUf(endereco.getUf());
+		view.setDistancia(endereco.getDistancia());
+		return view;
 	}
 
 }

@@ -48,3 +48,11 @@ body{
     margin-bottom: .5rem;
     align-self: flex-end;
 }
+
+.form-modal {
+	min-width: 1000px;
+}
+
+.flex {
+	display: flex;
+}
