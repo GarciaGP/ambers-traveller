@@ -119,6 +119,10 @@ public class HotelVM {
 		Endereco endereco = viewModel.endereco.converterParaModel(viewModel.endereco);
 
 		Hotel hotel = new Hotel();
+
+		if (viewModel.getCodigo() != 0)
+			hotel.setCodigo(viewModel.codigo);
+
 		hotel.setNome(viewModel.nome);
 		hotel.setDescricao(viewModel.descricao);
 		hotel.setTipo(viewModel.tipo);
@@ -146,6 +150,7 @@ public class HotelVM {
 		endereco = endereco.converterParaView(hotel.getEndereco());
 
 		HotelVM view = new HotelVM();
+		view.setCodigo(hotel.getCodigo());
 		view.setNome(hotel.getNome());
 		view.setDescricao(hotel.getDescricao());
 		view.setTipo(hotel.getTipo());

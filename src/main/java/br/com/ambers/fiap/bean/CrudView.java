@@ -18,6 +18,7 @@ import br.com.ambers.fiap.viewmodel.HotelVM;
 import br.com.fiap.tds.enumeration.Tipo;
 import br.com.fiap.tds.enumeration.Uf;
 import br.com.fiap.tds.exception.CommitException;
+import br.com.fiap.tds.exception.EntityNotFounfException;
 
 @Named
 @ViewScoped
@@ -126,22 +127,31 @@ public class CrudView implements Serializable {
 			}
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Hotel adicionado!"));
 		} else {
+			try {
+				service.atualizar(hospedagemSelecionada);
+			} catch (CommitException e) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO!", e.getMessage()));
+				e.printStackTrace();
+			}
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Updated"));
 		}
 		PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
 		PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
 	}
 
-	/*
-	 * public void deleteProduct() { try {
-	 * this.dao.delete(hospedagemSelecionada.getCodigo());
-	 * FacesContext.getCurrentInstance().addMessage(null, new
-	 * FacesMessage("Product Removed")); } catch (EntityNotFounfException e) {
-	 * FacesContext.getCurrentInstance().addMessage(null, new
-	 * FacesMessage(e.getMessage())); e.printStackTrace(); }
-	 * this.hospedagemSelecionada = null;
-	 * PrimeFaces.current().ajax().update("form:messages", "form:dt-products"); }
-	 */
+	public void deleteProduct() {
+		try {
+			this.service.excluir(hospedagemSelecionada);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Hospedagem excluída!"));
+		} catch (EntityNotFounfException | CommitException e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+			e.printStackTrace();
+		}
+		this.hospedagemSelecionada = null;
+		this.hospedagens.remove(hospedagemSelecionada);
+		PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+	}
 
 	public String getDeleteButtonMessage() {
 		if (hasSelectedProducts()) {
@@ -149,7 +159,7 @@ public class CrudView implements Serializable {
 			return size > 1 ? size + " products selected" : "1 product selected";
 		}
 
-		return "Delete";
+		return "Excluir";
 	}
 
 	public boolean hasSelectedProducts() {
@@ -157,8 +167,9 @@ public class CrudView implements Serializable {
 	}
 
 	public void deleteSelectedProducts() {
-		// this.hoteis.removeAll(this.hospedagemSelecionada);
-		this.hospedagensSelecionadas = null;
+		this.hospedagensSelecionadas.removeAll(this.hospedagensSelecionadas);
+		this.hospedagens.removeAll(this.hospedagensSelecionadas);
+		// this.hospedagensSelecionadas = null;
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Hospedagem removida!"));
 		PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
 		PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");

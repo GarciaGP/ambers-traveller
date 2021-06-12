@@ -30,7 +30,7 @@
 							styleClass="ui-button-danger"
 							disabled="#{!crudView.hasSelectedProducts()}" update="@this">
 							<p:confirm header="Confirmation"
-								message="Delete the selected products?"
+								message="Deletar todos os hotéis?"
 								icon="pi pi-exclamation-triangle" />
 						</p:commandButton>
 					</p:toolbarGroup>
@@ -143,7 +143,7 @@
 								</div>
 								<div class="p-field p-col">
 									<p:outputLabel for="@next" value="Tipo" />
-									<p:selectOneMenu id="typeOption"
+									<p:selectOneMenu required="true" id="typeOption"
 										value="#{crudView.tipoSelecionado}">
 										<f:selectItem itemLabel="Selecione . . ." itemValue="" />
 										<f:selectItems value="#{crudView.tipos}" />
@@ -184,7 +184,7 @@
 							<div class="ui-fluid p-formgrid p-grid flex">
 								<div class="p-field p-col">
 									<p:outputLabel for="@next" value="UF" />
-									<p:selectOneMenu id="option" value="#{crudView.ufSelecionado}">
+									<p:selectOneMenu required="true" id="option" value="#{crudView.ufSelecionado}">
 										<f:selectItem itemLabel="Selecione . . ." itemValue="" />
 										<f:selectItems value="#{crudView.ufs}" />
 									</p:selectOneMenu>
@@ -220,7 +220,7 @@
 				</p:dialog>
 
 				<p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade"
-					width="300" message="Delete the product?" header="Confirm"
+					width="300" message="Confirmar exclusão?" header="Confirm"
 					severity="warn">
 					<p:commandButton value="Yes" icon="pi pi-check"
 						actionListener="#{crudView.deleteProduct}" process="@this"

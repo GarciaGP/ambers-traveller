@@ -33,10 +33,12 @@ public class HotelService {
 	}
 
 	public void adicionar(HotelVM viewModel) throws CommitException {
+		this.em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		Hotel hotel = viewModel.converterParaModel(viewModel);
 
 		daoEnd.create(hotel.getEndereco());
 		daoTel.create(hotel.getTelefone());
+		em.merge(hotel);
 		dao.create(hotel);
 		dao.commit();
 	}
@@ -75,6 +77,19 @@ public class HotelService {
 		return dao.findAll();
 	}
 
+	public void excluirRest(Hotel hotel) throws EntityNotFounfException, CommitException {
+		dao.delete(hotel.getCodigo());
+		dao.commit();
+	}
+	
+	public void excluir(HotelVM hotel) throws EntityNotFounfException, CommitException {
+		Hotel hotelEntity = new Hotel();
+		hotelEntity = dao.read(hotel.getCodigo());
+		
+		dao.delete(hotelEntity.getCodigo());
+		dao.commit();
+	}
+	
 	public List<HotelVM> findAll() {
 		List<HotelVM> viewList = new ArrayList<HotelVM>();
 		List<Hotel> modelList = dao.findAll();
@@ -87,9 +102,5 @@ public class HotelService {
 		return viewList;
 	}
 
-	public void excluirRest(Hotel hotel) throws EntityNotFounfException {
-		dao.delete(hotel.getCodigo());
-
-	}
 
 }

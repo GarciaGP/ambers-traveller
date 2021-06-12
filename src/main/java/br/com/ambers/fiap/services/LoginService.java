@@ -2,6 +2,7 @@ package br.com.ambers.fiap.services;
 
 import javax.persistence.EntityManager;
 
+import br.com.ambers.fiap.viewmodel.LoginVM;
 import br.com.fiap.tds.dao.impl.LoginDaoImpl;
 import br.com.fiap.tds.entity.Login;
 import br.com.fiap.tds.exception.EntityNotFounfException;
@@ -17,7 +18,7 @@ public class LoginService {
 		this.dao = new LoginDaoImpl(em);
 	}
 	
-	public Login consultarLogin() throws EntityNotFounfException {
+	public Login consultarLogin(LoginVM login) throws EntityNotFounfException {
 		return dao.read(1);
 	}
 
