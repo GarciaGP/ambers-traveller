@@ -18,7 +18,7 @@ import br.com.fiap.tds.entity.Hotel;
 import br.com.fiap.tds.exception.EntityNotFounfException;
 
 @Path("/hoteis")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.TEXT_HTML)
 public class HotelEndpoint {
 
 	HotelService service;
@@ -27,9 +27,10 @@ public class HotelEndpoint {
 		this.service = new HotelService();
 	}
 
-	@GET
-	public List<Hotel> index() {
+	@GET	
+	public List<Hotel> show() {
 		return service.findAllRest();
+		//return Response.status(Response.Status.CREATED).entity(hotel).build();
 	}
 
 	@POST
@@ -47,7 +48,7 @@ public class HotelEndpoint {
 	}
 
 	@GET
-	@Path("{id}")
+	@Path("/{id}")
 	public Response show(@PathParam("id") Integer id) {
 		if (id == null) {
 			return Response.status(Response.Status.BAD_REQUEST).build();

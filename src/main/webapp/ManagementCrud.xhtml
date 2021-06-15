@@ -44,7 +44,7 @@
 					rowSelectMode="add" paginatorPosition="bottom">
 					<f:facet name="header">
 						<div class="products-table-header">
-							<span style="font-weight: bold">PRODUCTS</span> <span
+							<span style="font-weight: bold">Hotéis</span> <span
 								class="filter-container ui-input-icon-left"> <i
 								class="pi pi-search"></i> <p:inputText id="globalFilter"
 									onkeyup="PF('dtProducts').filter()" placeholder="Search" />
@@ -159,24 +159,25 @@
 							<div class="ui-fluid p-formgrid p-grid flex">
 								<div class="p-field p-col">
 									<p:outputLabel for="ddd">DDD</p:outputLabel>
-									<p:inputText id="ddd" min="0"
-										value="#{crudView.hospedagemSelecionada.telefone.ddd}" />
+									<p:inputNumber id="ddd" min="0" maxlength="2"
+										value="#{crudView.hospedagemSelecionada.telefone.ddd}" required="true"/>
 								</div>
 								<div class="p-field p-col">
 									<p:outputLabel for="tel">Telefone</p:outputLabel>
-									<p:inputText id="tel" min="0"
-										value="#{crudView.hospedagemSelecionada.telefone.telefone}" />
+									<p:inputNumber id="tel" min="0" maxlength="8"
+										value="#{crudView.hospedagemSelecionada.telefone.telefone}" required="
+										true" />
 								</div>
 							</div>
 							<div class="ui-fluid p-formgrid p-grid flex">
 								<div class="p-field p-col">
-									<p:outputLabel for="cel">celular</p:outputLabel>
-									<p:inputText id="cel" min="0"
+									<p:outputLabel for="cel">Celular</p:outputLabel>
+									<p:inputNumber id="cel" min="0" maxlength="9" 
 										value="#{crudView.hospedagemSelecionada.telefone.celular}" />
 								</div>
 								<div class="p-field p-col">
 									<p:outputLabel for="secTel">Telefone Secundário</p:outputLabel>
-									<p:inputText id="secTel" min="0"
+									<p:inputNumber id="secTel" min="0" maxlength="8"
 										value="#{crudView.hospedagemSelecionada.telefone.telefoneSecundario}" />
 								</div>
 							</div>
@@ -197,7 +198,7 @@
 							</div>
 							<div class="p-field p-col">
 								<p:outputLabel for="distance">Distância</p:outputLabel>
-								<p:inputText id="distance" min="0"
+								<p:inputNumber id="distance" min="0"
 									value="#{crudView.hospedagemSelecionada.endereco.distancia}" />
 							</div>
 							<div class="p-field p-col">
