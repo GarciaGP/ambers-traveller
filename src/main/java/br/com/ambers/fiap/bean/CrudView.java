@@ -134,7 +134,7 @@ public class CrudView implements Serializable {
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO!", e.getMessage()));
 				e.printStackTrace();
 			}
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Updated"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Hotel atualizado!"));
 		}
 		PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
 		PrimeFaces.current().ajax().update("form:messages", "form:dt-products");

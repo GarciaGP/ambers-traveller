@@ -118,6 +118,9 @@
 				<p:dialog header="Detalhes da hospedagem" showEffect="fade"
 					modal="true" widgetVar="manageProductDialog" responsive="true"
 					styleClass="form-modal">
+					<p:messages id="formMessages" closable="true">
+						<p:autoUpdate />
+					</p:messages>
 					<p:outputPanel id="manage-product-content"
 						styleClass="ui-fluid form-modal">
 						<p:outputPanel styleClass="
@@ -127,19 +130,25 @@
 							<div class="p-field">
 								<p:outputLabel for="name">Nome</p:outputLabel>
 								<p:inputText id="name"
-									value="#{crudView.hospedagemSelecionada.nome}" required="true" />
+									value="#{crudView.hospedagemSelecionada.nome}" required="true"
+									requiredMessage="É necessário informar um nome!">
+									<!-- <f:ajax event="blur" render="formMessages" /> -->
+								</p:inputText>
 							</div>
 							<div class="p-field">
 								<p:outputLabel for="description">Descrição</p:outputLabel>
 								<p:inputTextarea id="description"
-									value="#{crudView.hospedagemSelecionada.descricao}" />
+									value="#{crudView.hospedagemSelecionada.descricao}"
+									required="true"
+									requiredMessage="É necessário informar uma descrição!" />
 							</div>
 							<div class="ui-fluid p-formgrid p-grid flex">
 								<div class="p-field p-col">
 									<p:outputLabel for="price">Preço</p:outputLabel>
-									<p:inputNumber id="price"
-										value="#{crudView.hospedagemSelecionada.preco}" symbol=" BRL"
-										symbolPosition="s" decimalSeparator="." thousandSeparator="," />
+									<p:inputNumber id="price" required="true" minValue="0"
+										value="#{crudView.hospedagemSelecionada.preco}" symbol=" R$"
+										symbolPosition="s" decimalSeparator="." thousandSeparator=","
+										requiredMessage="É necessário informar o preço!" />
 								</div>
 								<div class="p-field p-col">
 									<p:outputLabel for="@next" value="Tipo" />
@@ -153,27 +162,30 @@
 							<div class="p-field p-col">
 								<p:outputLabel for="site">Site</p:outputLabel>
 								<p:inputText id="site" min="0"
-									value="#{crudView.hospedagemSelecionada.site}" />
+									value="#{crudView.hospedagemSelecionada.site}" required="true"
+									requiredMessage="Informe o endereço do site!" />
 							</div>
 							<hr />
 							<div class="ui-fluid p-formgrid p-grid flex">
 								<div class="p-field p-col">
 									<p:outputLabel for="ddd">DDD</p:outputLabel>
 									<p:inputNumber id="ddd" min="0" maxlength="2"
-										value="#{crudView.hospedagemSelecionada.telefone.ddd}" required="true"/>
+										value="#{crudView.hospedagemSelecionada.telefone.ddd}"
+										required="true" requiredMessage="É necessário informar o DDD!" />
 								</div>
 								<div class="p-field p-col">
 									<p:outputLabel for="tel">Telefone</p:outputLabel>
 									<p:inputNumber id="tel" min="0" maxlength="8"
-										value="#{crudView.hospedagemSelecionada.telefone.telefone}" required="
-										true" />
+										value="#{crudView.hospedagemSelecionada.telefone.telefone}"
+										required="true" requiredMessage="Informe o telefone!" />
 								</div>
 							</div>
 							<div class="ui-fluid p-formgrid p-grid flex">
 								<div class="p-field p-col">
 									<p:outputLabel for="cel">Celular</p:outputLabel>
-									<p:inputNumber id="cel" min="0" maxlength="9" 
-										value="#{crudView.hospedagemSelecionada.telefone.celular}" />
+									<p:inputNumber id="cel" min="0" maxlength="9"
+										value="#{crudView.hospedagemSelecionada.telefone.celular}"
+										required="true" requiredMessage="Informe o celular!" />
 								</div>
 								<div class="p-field p-col">
 									<p:outputLabel for="secTel">Telefone Secundário</p:outputLabel>
@@ -185,7 +197,8 @@
 							<div class="ui-fluid p-formgrid p-grid flex">
 								<div class="p-field p-col">
 									<p:outputLabel for="@next" value="UF" />
-									<p:selectOneMenu required="true" id="option" value="#{crudView.ufSelecionado}">
+									<p:selectOneMenu required="true" id="option"
+										value="#{crudView.ufSelecionado}">
 										<f:selectItem itemLabel="Selecione . . ." itemValue="" />
 										<f:selectItems value="#{crudView.ufs}" />
 									</p:selectOneMenu>
@@ -193,13 +206,15 @@
 								<div class="p-field p-col">
 									<p:outputLabel for="estado">Estado</p:outputLabel>
 									<p:inputText id="estado" min="0"
-										value="#{crudView.hospedagemSelecionada.endereco.estado}" />
+										value="#{crudView.hospedagemSelecionada.endereco.estado}"
+										required="true" requiredMessage="Informe o estado!" />
 								</div>
 							</div>
 							<div class="p-field p-col">
-								<p:outputLabel for="distance">Distância</p:outputLabel>
+								<p:outputLabel for="distance">Distância da Av. Paulista</p:outputLabel>
 								<p:inputNumber id="distance" min="0"
-									value="#{crudView.hospedagemSelecionada.endereco.distancia}" />
+									value="#{crudView.hospedagemSelecionada.endereco.distancia}"
+									required="true" requiredMessage="Informe a distância!" />
 							</div>
 							<div class="p-field p-col">
 								<h5>Escolha uma foto!</h5>
@@ -213,7 +228,8 @@
 						<p:commandButton value="Save" icon="pi pi-check"
 							actionListener="#{crudView.saveProduct}"
 							update="manage-product-content"
-							process="manage-product-content @this" />
+							process="manage-product-content @this" 
+							oncomplete="setTimeout(function() { $('#form:formMessages').html(''); }, 3000);" />
 						<p:commandButton value="Cancel" icon="pi pi-times"
 							onclick="PF('manageProductDialog').hide()"
 							class="ui-button-secondary" />
